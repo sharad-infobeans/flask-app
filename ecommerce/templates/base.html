@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/category-boxed.html  22 Nov 2019 10:03:00 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='assets/images/icons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='assets/images/icons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='assets/images/icons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='assets/images/icons/site.html') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='assets/images/icons/safari-pinned-tab.svg') }}" color="#666666">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/icons/favicon.ico') }}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{{ url_for('static', filename='assets/images/icons/browserconfig.xml') }}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css')}}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/plugins/owl-carousel/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/plugins/magnific-popup/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/plugins/nouislider/nouislider.css') }}">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li>
+                                        <a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
+                                    </li>
+                                    <li><a href="{{url_for('core.about')}}">About Us</a></li>
+                                    <li><a href="{{url_for('core.contact')}}">Contact Us</a></li>
+                                    {% if current_user.is_authenticated %}
+                                    <li>
+                                        <a href="{{ url_for('users.dashboard') }}"><i class="icon-user"></i>Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('users.logout') }}"><i class="icon-arrow-right"></i>Logout</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{{ url_for('users.login') }}"><i class="icon-user"></i>Login</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- End .top-menu -->
+                    </div>
+                    <!-- End .header-right -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="/" class="logo">
+                            <img src="{{ url_for('static', filename='assets/images/logo.png') }}" alt="Molla Logo" width="105" height="25" />
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul class="menu">
+                                <li class="megamenu-container active">
+                                    <a href="/" class="">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/" class="">Shop</a>
+                                </li>
+                            </ul>
+                            <!-- End .menu -->
+                        </nav>
+                        <!-- End .main-nav -->
+                    </div>
+                    <!-- End .header-left -->
+
+                    <div class="header-right">
+                        <div class="header-search">
+                            <a href="#" class="search-toggle" role="button" title="Search"><i
+                                    class="icon-search"></i></a>
+                            <form action="#" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                                        required />
+                                </div>
+                                <!-- End .header-search-wrapper -->
+                            </form>
+                        </div>
+                        <!-- End .header-search -->
+                        <div class="dropdown cart-dropdown">
+                            {% if current_user.is_authenticated  %}
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count"> {{ourcart[0]['noOfItems']}}</span>
+                            </a>
+                            {% if ourcart %}
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    {% for cart_product in ourcart[0]['cart'] %}
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="#">{{cart_product.name}}</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">{{cart_product.quantity}}</span>
+                                                x ${{cart_product.price}}
+                                            </span>
+                                        </div>
+                                        <!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="{{ url_for('static', filename='assets/images/products/cart/product-1.jpg') }}" alt="product" />
+                                            </a>
+                                        </figure>
+                                        <a href="{{ url_for('shop.removeFromCart', product_id=cart_product.id) }}" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                    </div>
+                                    {% endfor %}
+                                    <!-- End .product -->
+                                    <!-- End .product -->
+                                </div>
+                                <!-- End .cart-product -->
+
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
+
+                                    <span class="cart-total-price">${{ourcart[0]['subtotal']}}</span>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    <a href="{{url_for('shop.cart')}}" class="btn btn-primary">View Cart</a>
+                                    <a href="{{url_for('shop.cart_checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                            class="icon-long-arrow-right"></i></a>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <!-- End .dropdown-menu -->
+                        </div>
+                        <!-- End .cart-dropdown -->
+                    </div>
+                    <!-- End .header-right -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .header-middle -->
+        </header>
+        {% block content %}
+
+        {% endblock %}
+
+
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+
+
+    <!-- Plugins JS File -->
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.hoverIntent.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/superfish.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/wNumb.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap-input-spinner.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/nouislider.min.js') }}"></script>
+    <!-- Main JS File -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+
+
+<!-- molla/category-boxed.html  22 Nov 2019 10:03:02 GMT -->
+</html>
